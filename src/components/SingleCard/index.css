@@ -1,0 +1,13 @@
+.list-item {
+  list-style-type: none;
+  border-radius: 10px;
+  height: 400px;
+  width: 180px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.card-back-img {
+  height: 100%;
+  width: 100%;
+}
