@@ -9,9 +9,14 @@ class SingleCard extends Component {
 
   onClickShowCard = () => {
     const { showCard } = this.state;
-    this.setState((prev) => ({
-      showCard: !prev.showCard,
-    }));
+    const { cardDrawn, cardDetails } = this.props;
+    const { name } = cardDetails;
+    this.setState(
+      (prev) => ({
+        showCard: !prev.showCard,
+      }),
+      cardDrawn(name)
+    );
   };
 
   renderCardBack = () => (
