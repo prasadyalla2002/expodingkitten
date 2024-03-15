@@ -4,7 +4,7 @@ import SingleCard from "../SingleCard";
 
 import "./index.css";
 
-const cards = [
+const gameCards = [
   {
     imageUrl:
       "https://res.cloudinary.com/dbwmdblhs/image/upload/v1710427678/exploding-kitten/jblzrjyctl0ls8bd5ouy.jpg",
@@ -35,7 +35,25 @@ const gameStatusConstants = {
 };
 
 class ExplodingKitten extends Component {
-  state = { gameStatus: gameStatusConstants.initial, noOfCards: 5 };
+  state = {
+    gameStatus: gameStatusConstants.initial,
+    noOfCards: 5,
+    diffusers: 0,
+    cards: [],
+  };
+
+  componentDidMount() {
+    const { noOfCards } = this.state;
+    const cardsArray = [];
+
+    for (let i = 0; i < noOfCards; i++) {
+      let randomNumber = Math.floor(Math.random() * (4 - 0));
+      let randomCard = gameCards[randomNumber];
+      randomCard["id"] = uuidV4();
+      cardsArray.push(randomCard);
+    }
+    this.setState({ cards: cardsArray });
+  }
 
   onClickStartGame = () => {
     this.setState({ gameStatus: gameStatusConstants.inProgress });
@@ -56,17 +74,11 @@ class ExplodingKitten extends Component {
   };
 
   renderCards = () => {
-    const { noOfCards } = this.state;
-    const cardsArray = [];
-
-    for (let i = 0; i < noOfCards; i++) {
-      let randomNumber = Math.floor(Math.random() * (4 - 1) + 1);
-      cardsArray.push(cards[randomNumber]);
-    }
+    const { cards } = this.state;
     return (
       <ul className="cards-list">
-        {cardsArray.map((eachCard) => (
-          <SingleCard cardDetails={eachCard} key={uuidV4()} />
+        {cards.map((eachCard) => (
+          <SingleCard cardDetails={eachCard} key={eachCard.id} />
         ))}
       </ul>
     );
