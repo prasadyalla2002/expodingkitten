@@ -133,33 +133,32 @@ class ExplodingKitten extends Component {
         });
       }
     } else if (name === "Shuffle") {
-      if (cards.length <= 1) {
-        this.setState({
-          gameStatus: gameStatusConstants.won,
-          previousCard: name,
-        });
-      } else {
-        this.setState({
-          cards: this.shuffleCards(gameCards),
-          previousCard: name,
-          diffusers: 0,
-        });
-      }
+      this.setState({
+        cards: this.shuffleCards(gameCards),
+        previousCard: name,
+        diffusers: 0,
+      });
     }
   };
 
   renderCards = () => {
     const { cards } = this.state;
     return (
-      <ul className="cards-list">
-        {cards.map((eachCard) => (
-          <SingleCard
-            cardDetails={eachCard}
-            key={uuidV4()}
-            cardDrawn={this.cardDrawn}
-          />
-        ))}
-      </ul>
+      <>
+        {cards.length <= 1 ? (
+          this.renderSuccessView()
+        ) : (
+          <ul className="cards-list">
+            {cards.map((eachCard) => (
+              <SingleCard
+                cardDetails={eachCard}
+                key={uuidV4()}
+                cardDrawn={this.cardDrawn}
+              />
+            ))}
+          </ul>
+        )}
+      </>
     );
   };
 
